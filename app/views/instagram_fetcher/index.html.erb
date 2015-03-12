@@ -1,0 +1,21 @@
+<div class="container">
+
+  <%= form_tag '/', method: :get %>
+  <%= label_tag "Username" %>
+  <%= text_field_tag (:username) %>
+  <%= submit_tag 'Get photos' %>
+
+
+  <% @photos.each do |photo| %>
+    <p> <%= image_tag "#{photo['link']}media/?size=m" %> </p>
+    <p> Posted by: <%= photo["user"]["username"] %><%= image_tag("#{photo["user"]["profile_picture"]}",height: '50' )%></p>
+    <% if photo["caption"] != '' %>
+      <p> Caption: <%= photo["caption"]["text"] %> </p>
+    <% end %>
+    <p> Filter: <%= photo["filter"] %> </p>
+    <p> Likes: <%= photo["likes"]["count"] %></p>
+    <%= photo["likes"]["data"].map {|photo| photo["username"]}  %>
+  <% end %>
+
+
+</div>
