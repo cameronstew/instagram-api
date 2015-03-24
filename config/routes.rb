@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'instagram_fetcher#index'
-   get '/auth/instagram/callback' => 'users#instagram'
+   get '/auth/instagram/callback' => 'instagram_fetcher#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

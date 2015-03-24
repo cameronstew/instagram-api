@@ -7,16 +7,18 @@ class InstagramFetcher
       end
     end
 
+    def authenticate(code)
+      response = @connection.post "/oauth/access_token", { client_id: 'aadaebcf044f4c9082dc0cfbbdeecf8b', client_secret: '28bff5820b6049628cf04d30296b59f4', grant_type: 'authorization_code', redirect_uri: 'http://localhost:3013/auth/instagram/callback', code: code }
+      JSON.parse(response.body)["access_token"]
+    end
 
-
-    def instagram
-      response = @connection.get "/v1/media/popular", { client_id: ENV['CLIENT_ID'] }
+    def get_my_feed(access_token)
+      response = @connection.get "/v1/users/self/feed", {access_token: access_token}
       JSON.parse(response.body)["data"]
     end
 
-    # def look_up(username)
-    #   response = @connection.get "/v1/users/search?q='#{username}'&access_token=ACCESS-TOKEN"
-    #
-    # end
-
+    def get_user_feed(access_token, user_id)
+      response = @connection.get "/v1/users/#{user_id}/media/recent", {access_token: access_token}
+      JSON.parse(response.body)["data"]
+    end
 end
